@@ -15,9 +15,38 @@ template_path = "path/to/template.cif"
 with mrcfile.open(tomogram_path, permissive=True) as mrc:
     tomogram_data = np.array(mrc.data)
 
+    
+   
 # Load CIF file
 parser = CifParser(template_path)
 structure = parser.get_structures()[0]
+
+'''
+OR:
+import gemmi
+# Load the PDBx/mmCIF file
+structure = gemmi.read_structure('your_file.cif')
+# Get the coordinates and density values of the atoms in the template structure
+template_data = []
+for model in structure:
+    for chain in model:
+        for residue in chain:
+            for atom in residue:
+                template_data.append((atom.pos.x, atom.pos.y, atom.pos.z, atom.occupancy))
+                
+OR (maybe faster):
+rom Bio.PDB import MMCIFParser
+# Load the PDBx/mmCIF file and parse the structure
+parser = MMCIFParser()
+structure = parser.get_structure('template', 'your_file.cif')
+# Extract the atomic coordinates and occupancy values from the structure
+template_data = []
+for model in structure:
+    for chain in model:
+        for residue in chain:
+            for atom in residue:
+                template_data.append((atom.coord[0], atom.coord[1], atom.coord[2], atom.occupancy))
+'''
 
 # Extract atomic coordinates and density values
 template_data = []
