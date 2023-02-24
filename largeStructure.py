@@ -57,7 +57,8 @@ def wzm(image):
   
   
 ''' 
-OR:
+If template abundant:
+(may fail to find the template if it is only partially present or has undergone deformation or other changes that affect the WZM)
   # Calculate the WZM for the tomogram and template
 wzm_tomo = wzm(tomogram_data)
 wzm_template = wzm(template_map)
