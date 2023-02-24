@@ -69,7 +69,8 @@ def wzm(image):
     return wzm
 
 '''
-The fourth dimension of wzm_map is the number of features in the WZM. In this case, 11 is the number of features being calculated in the WZM, which are:
+The fourth dimension of wzm_map is the number of features in the WZM. 
+In this case, 11 is the number of features being calculated in the WZM, which are:
 Mean
 Variance
 Skewness
@@ -81,7 +82,6 @@ Gradient kurtosis
 Laplacian magnitude
 Laplacian variance
 Laplacian skewness
-So, the size of the fourth dimension is set to 11.
 '''
 
 # Calculate the WZM of the tomogram at each pixel
