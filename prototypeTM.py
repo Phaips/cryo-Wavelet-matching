@@ -68,6 +68,22 @@ def wzm(image):
         wzm[n] = np.sum(image * Z[n])
     return wzm
 
+'''
+The fourth dimension of wzm_map is the number of features in the WZM. In this case, 11 is the number of features being calculated in the WZM, which are:
+Mean
+Variance
+Skewness
+Kurtosis
+Gradient magnitude
+Gradient variance
+Gradient skewness
+Gradient kurtosis
+Laplacian magnitude
+Laplacian variance
+Laplacian skewness
+So, the size of the fourth dimension is set to 11.
+'''
+
 # Calculate the WZM of the tomogram at each pixel
 wzm_map = np.zeros((tomogram_data.shape[0]-template_shape[0], tomogram_data.shape[1]-template_shape[1], tomogram_data.shape[2]-template_shape[2], 11))
 for i in range(wzm_map.shape[0]):
