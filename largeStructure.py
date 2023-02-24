@@ -4,6 +4,7 @@ import mrcfile
 import scipy.fftpack as fft
 from scipy.ndimage import convolve
 from math import sqrt
+from pymatgen.io.cif import CifParser
 
 # Define the path to the input tomogram file
 tomogram_path = "path/to/tomogram.mrc"
@@ -14,23 +15,25 @@ template_path = "path/to/template.cif"
 with mrcfile.open(tomogram_path, permissive=True) as mrc:
     tomogram_data = np.array(mrc.data)
 
-# Load the template data (as a density map)
-with open(template_path, 'r') as f:
-    template_data = []
-    for line in f:
-        if line.startswith("_atom_site"):
-            x = float(line[80:88])
-            y = float(line[88:96])
-            z = float(line[96:104])
-            density = float(line[60:67])
-            template_data.append((x, y, z, density))
-    # Convert template data to a 3D array (density map)
-    template_data = np.array(template_data)
-    template_data = template_data[:, :-1]
-    template_shape = tuple(np.ceil(template_data.max(axis=0) - template_data.min(axis=0) + 1).astype(int))
-    template_data -= template_data.min(axis=0)
-    template_map = np.zeros(template_shape)
-    template_map[template_data[:, 0].astype(int), template_data[:, 1].astype(int), template_data[:, 2].astype(int)] = template_data[:, 3]
+# Load CIF file
+parser = CifParser(template_path)
+structure = parser.get_structures()[0]
+
+# Extract atomic coordinates and density values
+template_data = []
+for site in structure:
+    x, y, z = site.coords
+    density = site.properties.get('occupancy', 1.0) * site.properties.get('atomic_mass', 1.0)
+    template_data.append((x, y, z, density))
+
+# Convert template data to a 3D array (density map)
+template_data = np.array(template_data)
+template_data = template_data[:, :-1]
+template_shape = tuple(np.ceil(template_data.max(axis=0) - template_data.min(axis=0) + 1).astype(int))
+template_data -= template_data.min(axis=0)
+template_map = np.zeros(template_shape)
+template_map[template_data[:, 0].astype(int), template_data[:, 1].astype(int), template_data[:, 2].astype(int)] = template_data[:, 3]
+
 
 # Define the WZM function
 def wzm(image):
