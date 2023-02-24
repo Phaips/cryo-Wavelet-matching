@@ -9,7 +9,7 @@ with mrcfile.open('tomogram.mrc', permissive=True) as mrc:
     tomogram = mrc.data.astype(np.float32)
 
 # Load template data
-with open('template.cif', 'r') as f:
+with open('template.pdb', 'r') as f:
     lines = f.readlines()[10:]
     coords = []
     for line in lines:
