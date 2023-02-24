@@ -4,6 +4,19 @@ import mrcfile
 import scipy.fftpack as fft
 from scipy.ndimage import convolve
 from math import sqrt
+import gzip
+
+'''
+# Open the gzipped MRC file
+with gzip.open('your_file_name.gz', 'rb') as f:
+    # Read the contents of the file into memory
+    file_contents = f.read()
+
+# Parse the MRC data from the file contents
+with mrcfile.mmap(file_contents, permissive=True) as mrc:
+    # Access the tomogram data as a numpy array
+    tomogram_data = mrc.data
+'''
 
 # Define the path to the input tomogram file
 tomogram_path = "path/to/tomogram.mrc"
