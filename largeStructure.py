@@ -35,7 +35,7 @@ for model in structure:
                 template_data.append((atom.pos.x, atom.pos.y, atom.pos.z, atom.occupancy))
                 
 OR (maybe faster):
-rom Bio.PDB import MMCIFParser
+from Bio.PDB import MMCIFParser
 # Load the PDBx/mmCIF file and parse the structure
 parser = MMCIFParser()
 structure = parser.get_structure('template', 'your_file.cif')
