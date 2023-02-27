@@ -89,9 +89,9 @@ def wzm(image):
   
   
 ''' 
-If template abundant:
-(may fail to find the template if it is only partially present or has undergone deformation or other changes that affect the WZM)
-  # Calculate the WZM for the tomogram and template
+If template abundant in tomo:
+
+ # Calculate the WZM for the tomogram and template
 wzm_tomo = wzm(tomogram_data)
 wzm_template = wzm(template_map)
 
@@ -107,6 +107,8 @@ offsets = np.array([corr_max[0] - (tomogram_data.shape[0] // 2), corr_max[1] - (
 
 # Output the offset
 print("Translation offset (x, y, z):", offsets)
+
+(may fail to find the template if it is only partially present or has undergone deformation or other changes that affect the WZM)
 '''
   
 
